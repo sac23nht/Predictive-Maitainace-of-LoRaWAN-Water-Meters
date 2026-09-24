@@ -7,10 +7,13 @@ import os
 # ================================
 # 🔹 Model Paths
 # ================================
+# Resolved relative to this file so the app runs unmodified on any machine
+# or hosting platform (Streamlit Community Cloud, Docker, Render, etc.).
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATHS = {
-    "Logistic Regression": r"C:\Users\hp\Documents\Netmore Task\src\logistic_regression_pipeline.pkl",
-    "Random Forest": r"C:\Users\hp\Documents\Netmore Task\src\random_forest_best_pipeline.pkl",
-    "XGBoost": r"C:\Users\hp\Documents\Netmore Task\src\xgboost_best_pipeline.pkl"
+    "Logistic Regression": os.path.join(BASE_DIR, "logistic_regression_pipeline.pkl"),
+    "Random Forest": os.path.join(BASE_DIR, "random_forest_best_pipeline.pkl"),
+    "XGBoost": os.path.join(BASE_DIR, "xgboost_best_pipeline.pkl"),
 }
 
 # ================================
