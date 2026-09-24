@@ -28,8 +28,8 @@ This project aims to:
 
 Clone the repository:
 ```bash
-git clone https://github.com/your-username/meter-risk-prediction.git
-cd meter-risk-prediction
+git clone https://github.com/sac23nht/Predictive-Maitainace-of-LoRaWAN-Water-Meters.git
+cd Predictive-Maitainace-of-LoRaWAN-Water-Meters
 ```
 
 Create and activate a virtual environment:
@@ -51,21 +51,51 @@ streamlit run app.py
 📂 Project Structure
 
 ``` bash
+├── app.py                                       # Entry point (runs src/main.py)
 ├── src/
-│   ├── logistic_regression_pipeline.pkl   # Trained Logistic Regression Model
-│   ├── random_forest_best_pipeline.pkl    # Trained Random Forest Model
-│   └── xgboost_best_pipeline.pkl          # Trained XGBoost Model
+│   ├── main.py                                  # Streamlit application code
+│   ├── logistic_regression_pipeline.pkl         # Trained Logistic Regression Model
+│   ├── random_forest_best_pipeline.pkl          # Trained Random Forest Model
+│   └── xgboost_best_pipeline.pkl                # Trained XGBoost Model
 │
 ├── data/
-│   └── synthetic_meter_data.csv           # Dataset
+│   ├── Raw Data set.xlsx                        # Raw dataset
+│   └── Test Data.xlsx                           # Test dataset
 │
 ├── notebooks/
-│   └── exploratory_data_analysis.ipynb    # Jupyter notebook for EDA
+│   ├── Exploratory_Data_Analysis.ipynb          # EDA notebook
+│   ├── Logistic_Regression.ipynb
+│   ├── Random_FOrest.ipynb
+│   └── XGBoost_Classifier.ipynb
 │
-├── app.py                                 # Streamlit application
-├── requirements.txt                       # Python dependencies
-└── README.md                              # This README file
+├── requirements.txt                             # Python dependencies
+├── runtime.txt                                  # Python version pin (Streamlit Cloud)
+├── Dockerfile                                   # Container image for generic hosting
+└── README.md                                    # This README file
 ```
+
+---
+
+## ☁️ Deployment
+
+Model paths in the app are resolved relative to `src/main.py`, so no code
+changes are needed to deploy elsewhere — just make sure the `.pkl` files in
+`src/` are included.
+
+### Option A — Streamlit Community Cloud
+1. Push this repo to GitHub (already done if you're reading this there).
+2. Go to [share.streamlit.io](https://share.streamlit.io), create a new app,
+   point it at this repo and set the main file path to `app.py`.
+3. Streamlit Cloud installs `requirements.txt` and uses `runtime.txt`
+   automatically.
+
+### Option B — Any Docker-based host (Render, Railway, Fly.io, a VPS, etc.)
+```bash
+docker build -t meter-risk-app .
+docker run -p 8501:8501 meter-risk-app
+```
+The container reads the `$PORT` environment variable if the platform sets
+one (Render/Railway do this automatically), otherwise it defaults to 8501.
 🤖 Modeling
 🎯 Target Variable
 
